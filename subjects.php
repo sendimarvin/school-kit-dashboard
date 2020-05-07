@@ -10,10 +10,10 @@
 </head>
 <body>
     <div class="container">
-      <?php require_once 'includes/navbar.php'?>
+        <?php require_once 'includes/navbar.php'?>
         <div>
             <!-- <h2>here</h2> -->
-            <h3>All Groups in application</h3>
+            <h3>All Subjects</h3>
             <br>
             <br>
 
@@ -22,13 +22,9 @@
                 <thead>
                     <tr>
                         <th>Name</th>
-                        <th>Description</th>
                         <th>Level</th>
-                        <th>Subject</th>
-                        <th>Events</th>
-                        <th>Members</th>
-                        <th>Created By</th>
-                        <th>Group Status</th>
+                        <th>No. of Notes</th>
+                        <th>No. of Questions</th>
                     </tr>
                 </thead>
             </table>
@@ -43,7 +39,7 @@
     <script src="js/custom.js"></script>
     <script>
       $(function () {
-          getGroups();
+          getSubjects();
       });
     </script>
 </body>
