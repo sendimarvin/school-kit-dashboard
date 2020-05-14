@@ -21,7 +21,10 @@
                   <a class="nav-link" href="subjects.php">Subjects</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="#">Members</a>
+                  <a class="nav-link" href="levels.php">Levels</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="settings.php">Settings</a>
                 </li>
                 <li class="nav-item dropdown">
                   <a class="nav-link dropdown-toggle" href="notes.php" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

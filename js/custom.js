@@ -108,20 +108,67 @@ function getNotes () {
     )
 }
 
+function getLevels () {
+    $.get("http://cresteddevelopers.com/AppFiles/SkulKitApp/manage-users.php?get_levels", {}, 
+        data => {
+            let oTable = $('#example').DataTable({
+                "pageLength": 25,
+                "order": [[ 0, "asc" ]],
+                "columns": [
+                    { "data": "name" }
+                ],
+                data:  data
+            });
+
+        }, 'JSON'
+    )
+}
+
 function loadNotesSubjectList () {
     $.get("http://cresteddevelopers.com/AppFiles/SkulKitApp/manage-users.php?get_subjects", {}, 
         data => {
             let html_str = ``;
             data.forEach(item => {
-                html_str += `<option value="${item.name}">${item.name}</option>`;
+                html_str += `<option value="${item.id}">${item.name}</option>`;
             });
             $('#notes-subject').html(html_str);
+            console.log(html_str);
+        }, 'JSON'
+    )
+}
+
+function loadSubjectLevelList  () {
+    $.get("http://cresteddevelopers.com/AppFiles/SkulKitApp/manage-users.php?get_levels", {}, 
+        data => {
+            let html_str = ``;
+            data.forEach(item => {
+                html_str += `<option value="${item.id}">${item.name}</option>`;
+            });
+            $('#subject_level').html(html_str);
         }, 'JSON'
     )
 }
 
 function saveNotes () {
     let notesTitle = $('#notes-title').val();
-    let subjectId = $('[list="notes-subject"]').val();
+    let subjectId = +$('#notes-subject').val();
     let isNotes = $('#notes-title').val();
+    if (!notesTitle || !subjectId || !isNotes) {
+        return alert('Please fill in all fields');
+    }
+
+    $('#add-subject-form').submit();
+    $('#modal-close').click();
+}
+
+function saveSubject () {
+    let subject_name = $('#subject_name').val();
+    let subject_level = +$('#subject_level').val();
+    if (!subject_name || !subject_level) {
+        return alert('Please fill in all fields');
+    }
+
+    $('#add-subject-form').submit();
+    $('#modal-close').click();
+
 }
