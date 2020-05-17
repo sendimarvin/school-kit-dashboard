@@ -35,7 +35,7 @@
                 <input type="text" class="form-control" id="subject_name" name="subject_name">
             </div>
             <div class="form-group">
-                <label for="notes-subject" class="col-form-label">Subject:</label>
+                <label for="notes-subject" class="col-form-label">Subject Level:</label>
 
                 <select type="text" class="form-control" id="subject_level" name="subject_level">
                     <option value='1'>Primary</option>

@@ -129,7 +129,7 @@ function loadNotesSubjectList () {
         data => {
             let html_str = ``;
             data.forEach(item => {
-                html_str += `<option value="${item.id}">${item.name}</option>`;
+                html_str += `<option value="${item.id}">${item.name} - <span style="float:right;">${item.level_name}</span></option>`;
             });
             $('#notes-subject').html(html_str);
             console.log(html_str);

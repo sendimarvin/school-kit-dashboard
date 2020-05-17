@@ -36,16 +36,10 @@
             <div class="form-group">
                 <label for="notes-subject" class="col-form-label">Subject:</label>
 
-                <select type="text" class="form-control" id="notes-subject" name="subject_id">
+                <select type="text" class="form-control" id="notes-subject" name="notes-subject">
                     <option value='1'>Maths</option>
                 </select>
-
-                <!-- <input list="notes-subject" value="" class="custom-select custom-select-sm"> -->
-                <!-- <datalist id="notes-subject" style="width:90%"> -->
-                    <!-- <option value="ISO-8859-1">ISO-8859-1</option>
-                    <option value="cp1252">ANSI</option>
-                    <option value="utf8">UTF-8</option> -->
-                <!-- </datalist> -->
+                
 
             </div>
 
