@@ -15,11 +15,12 @@
     <!-- Button trigger modal -->
         
         <!-- Modal -->
-        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" 
+            aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Add Subject</h5>
+                <h5 class="modal-title">Add Subject</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
                 </button>
@@ -31,11 +32,12 @@
                 method='POST' enctype="multipart/form-data"
             >
             <div class="form-group">
+                <input type="hidden" id="subject_id" name="subject_id">
                 <label for="subject_name" class="col-form-label">Subject Name:</label>
                 <input type="text" class="form-control" id="subject_name" name="subject_name">
             </div>
             <div class="form-group">
-                <label for="notes-subject" class="col-form-label">Subject Level:</label>
+                <label for="subject_level" class="col-form-label">Subject Level:</label>
 
                 <select type="text" class="form-control" id="subject_level" name="subject_level">
                     <option value='1'>Primary</option>
@@ -64,9 +66,8 @@
             <!-- <h2>here</h2> -->
             <h3>All Subjects</h3>
 
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter"> Add Subject </button>
-
-
+            <button type="button" class="btn btn-primary" data-toggle="modal" 
+                data-target="#exampleModalCenter"  id="exampleModalLongTitle"> Add Subject </button>
             <br>
             <br>
 
@@ -78,6 +79,7 @@
                         <th>Level</th>
                         <th>No. of Notes</th>
                         <th>No. of Questions</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
             </table>
@@ -92,37 +94,56 @@
     <script src="js/custom.js"></script>
     <script>
       $(function () {
-            getSubjects();
+        getSubjects();
 
-            $('#exampleModalCenter').on('shown.bs.modal', function () {
-                loadSubjectLevelList();
+        $('#exampleModalCenter').on('shown.bs.modal', function () {
+            loadSubjectLevelList();
+        });
+
+        $(document).on('submit', 'form.AjaxForm', function() {   
+            var formData = new FormData(this);
+
+            $.ajax({
+                url     : $(this).attr('action'),
+                type    : $(this).attr('method'),
+                dataType: 'json',
+                data    : formData,
+                success : function( data ) {
+                        // console.log(data);
+                        alert('Submission successfull');
+                        window.location.reload();
+                },
+                error   : function( xhr, err ) {
+                            alert('Error');     
+                },
+                cache: false,
+                contentType: false,
+                processData: false
+            });    
+            return false;
+        });
+    });
+
+    function editForm (formData) {
+        // console.log(formData);
+        $('#exampleModalLongTitle').click();
+        setTimeout(() => {
+            $('#subject_id').val(+formData.id);
+            $('#subject_name').val(formData.name);
+            $('#subject_level').val(+formData.level_id);
+        }, 1000);
+    }
+
+    function deleteSubject (row) {
+        var r = confirm("Are you sure you want to delete this subject?");
+        if (r == true) {
+            $.post('http://cresteddevelopers.com/AppFiles/SkulKitApp/manage-users.php?delete_subject', 
+            {user_id: 1, id: row.id}, resp => {
+                window.alert('Update successfull');   
+                window.location.reload();
             });
-
-            $(document).on('submit', 'form.AjaxForm', function() {   
-                var formData = new FormData(this);
-
-                $.ajax({
-                    url     : $(this).attr('action'),
-                    type    : $(this).attr('method'),
-                    dataType: 'json',
-                    data    : formData,
-                    success : function( data ) {
-                            // console.log(data);
-                            alert('Submission successfull');
-                            window.location.reload();
-                    },
-                    error   : function( xhr, err ) {
-                                alert('Error');     
-                    },
-                    cache: false,
-                    contentType: false,
-                    processData: false
-                });    
-                return false;
-            });
-
-
-      });
+        } else;
+    }
     </script>
 </body>
 </html>

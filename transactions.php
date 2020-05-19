@@ -18,43 +18,30 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" >Add Notes</h5>
+                <h5 class="modal-title" >Add Level</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
             
-            <form class="AjaxForm" id="add-subject-form" 
-                action="http://cresteddevelopers.com/AppFiles/SkulKitApp/manage-users.php?add_notes_to_subject" 
+            <form class="AjaxForm" id="add-level-form" 
+                action="http://cresteddevelopers.com/AppFiles/SkulKitApp/manage-users.php?add_level" 
                 method='POST' enctype="multipart/form-data"
             >
             <div class="form-group">
-                <input type="hidden" id="notes_id" name="notes_id">
-                <label for="notes-title" class="col-form-label">Title:</label>
-                <input type="text" class="form-control" id="notes-title" name="title">
+                <input type="hidden" id="level_id" name="level_id">
+                <label for="level_name" class="col-form-label">Level Name:</label>
+                <input type="text" class="form-control" id="level_name" name="level_name">
             </div>
-            <div class="form-group">
-                <label for="notes-subject" class="col-form-label">Subject:</label>
-
-                <select type="text" class="form-control" id="notes-subject" name="notes-subject">
-                    <option value='1'>Maths</option>
-                </select>
-                
-
-            </div>
-
-            <div class="form-group">
-                <label for="notes-file" class="col-form-label">Notes:</label>
-                <input type="file" class="form-control" id="notes-file" name="file" accept="application/pdf">
-            </div>
+            
             </form>
 
 
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal" id="modal-close" >Close</button>
-                <button type="button" class="btn btn-primary" onClick="saveNotes()">Save</button>
+                <button type="button" class="btn btn-primary" onClick="saveLevel()">Save</button>
             </div>
             </div>
         </div>
@@ -68,10 +55,11 @@
         <?php require_once 'includes/navbar.php'?>
         <div>
             <!-- <h2>here</h2> -->
-            <h3>All Subject Notes</h3>
+            <h3>All Transactions</h3>
+            <hr>
 
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter" 
-                id="exampleModalLongTitle"> Add Notes </button>
+            <!-- <button type="button" class="btn btn-primary" data-toggle="modal" 
+                data-target="#exampleModalCenter" id="add-level"> Add Level </button> -->
 
             <br>
             <br>
@@ -81,11 +69,15 @@
                 <thead>
                     <tr>
                         <th>Name</th>
-                        <th>Subject</th>
-                        <th>Level</th>
-                        <th>Notes</th>
-                        <th>Create Date</th>
-                        <th>Action </th>
+                        <th>Ref.&nbsp;#</th>
+                        <th>Trans.&nbsp;#</th>
+                        <th>Phone</th>
+                        <th>Date</th>
+                        <th>Debit</th>
+                        <th>Credit</th>
+                        <th>Status</th>
+                        <th>Error</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
             </table>
@@ -100,20 +92,15 @@
     <script src="js/custom.js"></script>
     <script>
       $(function () {
-        getNotes();
-        setTimeout(() => {
-            loadNotesSubjectList();
-        }, 0);
-
+        getTranasctions();
         $('#exampleModalCenter').on('shown.bs.modal', function () {
-            $('#notes_id').val('');
-            $('#add-subject-form').trigger('reset');
-            
+            $('#level_id').val('');
+            $('#add-subject-form').trigger("reset");
         });
+        
 
         $(document).on('submit', 'form.AjaxForm', function() {
             var formData = new FormData(this);
-
             $.ajax({
                 url     : $(this).attr('action'),
                 type    : $(this).attr('method'),
@@ -132,28 +119,40 @@
             });    
             return false;
         });
+
+
       });
 
     function editForm (formData) {
-        console.log(formData);
-        $('#exampleModalLongTitle').click();
+        $('#add-level').click();
         setTimeout(() => {
-            $('#notes_id').val(+formData.id);
-            $('#notes-title').val(formData.name);
-            $('#notes-subject').val(+formData.subject_id);
+            $('#level_id').val(+formData.id);
+            $('#level_name').val(formData.name);
         }, 1000);
     }
 
-    function deleteItem (row) {
-        var r = confirm("Are you sure you want to delete these notes?");
+    function deleteLevel (row) {
+        var r = confirm("Are you sure you want to delete this level?");
         if (r == true) {
-            $.post('http://cresteddevelopers.com/AppFiles/SkulKitApp/manage-users.php?delete_notes', 
+            $.post('http://cresteddevelopers.com/AppFiles/SkulKitApp/manage-users.php?delete_level', 
             {user_id: 1, id: row.id}, resp => {
                 window.alert('Update successfull');   
                 window.location.reload();
             });
         } else;
     }
+
+    function saveLevel () {
+        let level_id = +$('#level_id').val();
+        let level_name = $('#level_name').val().trim();
+        if (!level_name) {
+            return alert('Please fill in all fields');
+        }
+
+        $('#add-level-form').submit();
+        $('#modal-close').click();
+    }
+
 
 
     </script>

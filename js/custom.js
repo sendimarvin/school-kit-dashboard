@@ -52,7 +52,7 @@ function getSubjects () {
     $.get("http://cresteddevelopers.com/AppFiles/SkulKitApp/manage-users.php?get_subjects", {}, 
         data => {
             // console.log(data);
-            let oTable = $('#example').DataTable({
+            let table = $('#example').DataTable({
                 "pageLength": 25,
                 "order": [[ 0, "asc" ]],
                 "columns": [
@@ -60,9 +60,30 @@ function getSubjects () {
                     { "data": "level_name" },
                     { "data": "subject_notes_counts" },
                     { "data": "subject_questions_counts" },
+                    {
+                        data: null,
+                        className: "center",
+                        defaultContent: `<center>
+                                            <button href="javascript:void()" class="btn btn-default edit-item" title="Edit">Edit</button>
+                                            &nbsp;&nbsp;&nbsp;
+                                            <button href="javascript:void()" class="btn btn-danger  delete-item" title="Delete">Delete</button>
+                                        </center>`
+                    }
                 ],
                 data:  data
             });
+
+            
+            $('#example tbody').on( 'click', '.edit-item', function () {
+                var data = table.row( $(this).parents('tr') ).data();
+                editForm(data);
+            } );
+
+            $('#example tbody').on( 'click', '.delete-item', function () {
+                var data = table.row( $(this).parents('tr') ).data();
+                deleteSubject(data);
+            } );
+
 
         }, 'JSON'
     )
@@ -91,7 +112,7 @@ function getUsers () {
 function getNotes () {
     $.get("http://cresteddevelopers.com/AppFiles/SkulKitApp/manage-users.php?get_notes_in_subject", {}, 
         data => {
-            let oTable = $('#example').DataTable({
+            let table = $('#example').DataTable({
                 "pageLength": 25,
                 "order": [[ 0, "asc" ]],
                 "columns": [
@@ -100,9 +121,69 @@ function getNotes () {
                     { "data": "level_name" },
                     { "data": "notes" },
                     { "data": "created_at" },
+                    {
+                        data: null,
+                        className: "center",
+                        defaultContent: `<center>
+                                            <button href="javascript:void()" class="btn btn-default edit-item" title="Edit">Edit</button>
+                                            &nbsp;&nbsp;&nbsp;
+                                            <button href="javascript:void()" class="btn btn-danger  delete-item" title="Delete">Delete</button>
+                                        </center>`
+                    }
                 ],
                 data:  data
             });
+
+            $('#example tbody').on( 'click', '.edit-item', function () {
+                var data = table.row( $(this).parents('tr') ).data();
+                editForm(data);
+            } );
+
+            $('#example tbody').on( 'click', '.delete-item', function () {
+                var data = table.row( $(this).parents('tr') ).data();
+                deleteItem(data);
+            } );
+
+        }, 'JSON'
+    )
+}
+
+function getQuestions () {
+    $.get("http://cresteddevelopers.com/AppFiles/SkulKitApp/manage-users.php?get_subject_questions", {}, 
+        data => {
+            let table = $('#example').DataTable({
+                "pageLength": 25,
+                "order": [[ 0, "asc" ]],
+                "columns": [
+                    { "data": "question" },
+                    { "data": "question_file" },
+                    { "data": "subject_name" },
+                    { "data": "create_date" },
+                    {
+                        data: null,
+                        className: "center",
+                        defaultContent: `<center>
+                                            <button href="javascript:void()" class="btn btn-default edit-item" title="Edit">Edit</button>
+                                            &nbsp;&nbsp;&nbsp;
+                                            <button href="javascript:void()" class="btn btn-danger  delete-item" title="Delete">Delete</button>
+                                        </center>`
+                    }
+                ],
+                data:  data
+            });
+
+
+            $('#example tbody').on( 'click', '.edit-item', function () {
+                var data = table.row( $(this).parents('tr') ).data();
+                editForm(data);
+            } );
+
+            $('#example tbody').on( 'click', '.delete-item', function () {
+                var data = table.row( $(this).parents('tr') ).data();
+                deleteQuestion(data);
+            } );
+
+
 
         }, 'JSON'
     )
@@ -111,14 +192,75 @@ function getNotes () {
 function getLevels () {
     $.get("http://cresteddevelopers.com/AppFiles/SkulKitApp/manage-users.php?get_levels", {}, 
         data => {
-            let oTable = $('#example').DataTable({
+            let table = $('#example').DataTable({
                 "pageLength": 25,
                 "order": [[ 0, "asc" ]],
                 "columns": [
-                    { "data": "name" }
+                    { "data": "name" },
+                    {
+                        data: null,
+                        className: "center",
+                        defaultContent: `<center>
+                                            <button href="javascript:void()" class="btn btn-default edit-item" title="Edit">Edit</button>
+                                            &nbsp;&nbsp;&nbsp;
+                                            <button href="javascript:void()" class="btn btn-danger  delete-item" title="Delete">Delete</button>
+                                        </center>`
+                    }
                 ],
                 data:  data
             });
+
+            $('#example tbody').on( 'click', '.edit-item', function () {
+                var data = table.row( $(this).parents('tr') ).data();
+                editForm(data);
+            } );
+
+            $('#example tbody').on( 'click', '.delete-item', function () {
+                var data = table.row( $(this).parents('tr') ).data();
+                deleteLevel(data);
+            } );
+
+        }, 'JSON'
+    )
+}
+
+
+function getTranasctions () {
+    $.get("http://cresteddevelopers.com/AppFiles/SkulKitApp/manage-users.php?get_transactions", {}, 
+        data => {
+            let table = $('#example').DataTable({
+                "pageLength": 25,
+                "order": [[ 0, "asc" ]],
+                "columns": [
+                    { "data": "username" },
+                    { "data": "reference_no" },
+                    { "data": "transaction_id" },
+                    { "data": "phone" },
+                    { "data": "created_at" },
+                    { "data": "debit_amount" },
+                    { "data": "credit_amount" },
+                    { "data": "payment_status" },
+                    { "data": "return_message" },
+                    {
+                        data: null,
+                        className: "center",
+                        defaultContent: `<center>
+                                            <button href="javascript:void()" class="btn btn-default edit-item" title="Edit">Confirm</button>
+                                        </center>`
+                    }
+                ],
+                data:  data
+            });
+
+            $('#example tbody').on( 'click', '.edit-item', function () {
+                var data = table.row( $(this).parents('tr') ).data();
+                editForm(data);
+            } );
+
+            $('#example tbody').on( 'click', '.delete-item', function () {
+                var data = table.row( $(this).parents('tr') ).data();
+                deleteLevel(data);
+            } );
 
         }, 'JSON'
     )
@@ -133,6 +275,17 @@ function loadNotesSubjectList () {
             });
             $('#notes-subject').html(html_str);
             console.log(html_str);
+        }, 'JSON'
+    )
+}
+function loadNotesSubjectListInQuestions () {
+    $.get("http://cresteddevelopers.com/AppFiles/SkulKitApp/manage-users.php?get_subjects", {}, 
+        data => {
+            let html_str = ``;
+            data.forEach(item => {
+                html_str += `<option value="${item.id}">${item.name} - <span style="float:right;">${item.level_name}</span></option>`;
+            });
+            $('#question_subject').html(html_str);
         }, 'JSON'
     )
 }

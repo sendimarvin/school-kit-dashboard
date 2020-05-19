@@ -24,6 +24,9 @@
                   <a class="nav-link" href="levels.php">Levels</a>
                 </li>
                 <li class="nav-item">
+                  <a class="nav-link" href="transactions.php">Transactions</a>
+                </li>
+                <li class="nav-item">
                   <a class="nav-link" href="settings.php">Settings</a>
                 </li>
                 <li class="nav-item dropdown">
